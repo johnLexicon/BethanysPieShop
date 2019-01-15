@@ -13,22 +13,33 @@ namespace BethanysPieShop
     {
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        //services instance is passed by using Dependency Injection.    
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc(); //The MVC Service must be added.
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
 
-            app.Run(async (context) =>
-            {
-                await context.Response.WriteAsync("Hello World!");
-            });
+            /*** Middleware Components Configuration ***/
+
+            /*** The sequence is important when adding the components below ***/
+
+            //Makes sure that we get an exception if somthing goes wrong.
+            //Only used in development mode.
+            app.UseDeveloperExceptionPage();
+
+            //Returns the status code page.
+            app.UseStatusCodePages();
+
+            //Will look after static files in the wwwroot folder and return them when needed.
+            //Should be invoked before the UseMvcWithDefaultRoute for not bother the MVC route with static files like images and such that
+            //should be handled by the static files middelware.
+            app.UseStaticFiles();
+
+            app.UseMvcWithDefaultRoute();
         }
     }
 }
