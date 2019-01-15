@@ -14,11 +14,12 @@ namespace BethanysPieShop
     {
         public static void Main(string[] args)
         {
+            //Configures the Web server Kestrel (An internal web server)
             CreateWebHostBuilder(args).Build().Run();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+                .UseStartup<Startup>(); //The Generic type is the class that will be used for the startup.
     }
 }
