@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BethanysPieShop.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -16,6 +17,9 @@ namespace BethanysPieShop
         //services instance is passed by using Dependency Injection.    
         public void ConfigureServices(IServiceCollection services)
         {
+            //AddTransient means that a new instance of MockPieRepository will be created (By Dependency Injection) every time an instance is requested.
+            services.AddTransient<IPieRepository, MockPieRepository>();
+
             services.AddMvc(); //The MVC Service must be added.
         }
 
