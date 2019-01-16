@@ -35,7 +35,7 @@ namespace BethanysPieShop.Models
 
         public Pie GetPieById(int id)
         {
-            return _pies.FirstOrDefault(p => p.ID == id);
+            return _pies.FirstOrDefault(p => p.Id == id);
         }
     }
 }
