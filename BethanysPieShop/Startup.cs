@@ -32,6 +32,7 @@ namespace BethanysPieShop
 
             //AddTransient means that a new instance of MockPieRepository will be created (By Dependency Injection) every time an instance is requested.
             services.AddTransient<IPieRepository, PieRepository>();
+            services.AddTransient<IFeedbackRepository, FeedbackRepository>();
 
             services.AddMvc(); //The MVC Service must be added.
         }
@@ -56,7 +57,17 @@ namespace BethanysPieShop
             //should be handled by the static files middelware.
             app.UseStaticFiles();
 
-            app.UseMvcWithDefaultRoute();
+            //The default MVC Route maps to: {controller=Home}/{action=Index}/{id?}
+            //app.UseMvcWithDefaultRoute();
+
+            //Custom route:
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}"
+                );
+            });
         }
     }
 }

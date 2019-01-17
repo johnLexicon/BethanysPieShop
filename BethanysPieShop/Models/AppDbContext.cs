@@ -15,5 +15,6 @@ namespace BethanysPieShop.Models
 
         //EF Generates a table named Pies with its properties as columns.
         public DbSet<Pie> Pies { get; set; }
+        public DbSet<Feedback> Feedbacks { get; set; }
     }
 }

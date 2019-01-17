@@ -8,6 +8,18 @@
         <title>@ViewBag.Title</title>
     </head>
     <body>
+        <header>
+            <nav class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container">
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <li><a asp-controller="Home" asp-action="Index" class="navbar-brand">Bethanys Pie Shop</a></li>
+                            <li><a asp-controller="Feedback" asp-action="Index" class="navbar-link">Feedback</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
         <div class="container body-content">
             <div class="row">
                 @* The RenderBody() will be replaced with the actual body of the view *@
