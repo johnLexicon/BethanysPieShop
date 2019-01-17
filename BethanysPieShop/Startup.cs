@@ -6,6 +6,7 @@ using BethanysPieShop.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,6 +31,9 @@ namespace BethanysPieShop
 
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<AppDbContext>(); //The database where to store the security info.
+
             //AddTransient means that a new instance of MockPieRepository will be created (By Dependency Injection) every time an instance is requested.
             services.AddTransient<IPieRepository, PieRepository>();
             services.AddTransient<IFeedbackRepository, FeedbackRepository>();
@@ -43,7 +47,7 @@ namespace BethanysPieShop
 
             /*** Middleware Components Configuration ***/
 
-            /*** The sequence is important when adding the components below ***/
+            /*** The sequence is important (It is as a Pipeline) when adding the components below ***/
 
             //Makes sure that we get an exception if somthing goes wrong.
             //Only used in development mode.
@@ -56,6 +60,9 @@ namespace BethanysPieShop
             //Should be invoked before the UseMvcWithDefaultRoute for not bother the MVC route with static files like images and such that
             //should be handled by the static files middelware.
             app.UseStaticFiles();
+
+            //Authentication must be placed before app.UseMvc
+            app.UseAuthentication();
 
             //The default MVC Route maps to: {controller=Home}/{action=Index}/{id?}
             //app.UseMvcWithDefaultRoute();
